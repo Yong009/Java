@@ -17,7 +17,9 @@ public class application {
 
 		Scanner sc = new Scanner(System.in);
 		int proCount = 0;
-		int max=0; int index = 0; int sum =0;
+		int max = 0;
+		int index = 0;
+		int sum = 0;
 		Keyboard[] kbdAry = null;
 
 		while (true) {
@@ -30,43 +32,45 @@ public class application {
 				proCount = Integer.parseInt(sc.nextLine());
 			} else if (selectNo == 2) {
 				kbdAry = new Keyboard[proCount];
-				for(int i=0; i<kbdAry.length; i++) {
-				kbdAry[i] = new Keyboard();
-				System.out.println("상품명>");
-				String name = sc.nextLine();
-				kbdAry[i].name = name;
-				
-				System.out.println("가격>");
-				int price = Integer.parseInt(sc.nextLine());
-				kbdAry[i].price = price;
-			}
-			} else if(selectNo==3) {
-				for(int i=0; i<kbdAry.length; i++) {
-					System.out.print(kbdAry[i].name+" : ");
-					System.out.println(kbdAry[i].price+"원");
+				for (int i = 0; i < kbdAry.length; i++) {
+					kbdAry[i] = new Keyboard();
+					System.out.println("상품명>");
+					String name = sc.nextLine();
+					kbdAry[i].name = name;
+
+					System.out.println("가격>");
+					int price = Integer.parseInt(sc.nextLine());
+					kbdAry[i].price = price;
 				}
-			} else if(selectNo==4) {
-				
-				for(int i=0; i<kbdAry.length; i++) {
-					if(max<kbdAry[i].price) {
+			} else if (selectNo == 3) {
+				for (int i = 0; i < kbdAry.length; i++) {
+					System.out.print(kbdAry[i].name + " : ");
+					System.out.println(kbdAry[i].price + "원");
+				}
+			} else if (selectNo == 4) {
+
+				for (int i = 0; i < kbdAry.length; i++) {
+					if (max < kbdAry[i].price) {
 						max = kbdAry[i].price;
 						index = i;
-					
-				}} 
-					for(int i=0; i<kbdAry.length; i++) {
-				  if(kbdAry[index].price != kbdAry[i].price) {
-					  
-					   sum += kbdAry[i].price;}
-				} 
-				System.out.println("최고 가격 제품 : "+kbdAry[index].name+"\t"); 
-				System.out.println("이 제품을 제외한 가격 총합 : "+sum+"원");
+
+					}
+				}
+				for (int i = 0; i < kbdAry.length; i++) {
+					if (kbdAry[index].price != kbdAry[i].price) {
+
+						sum += kbdAry[i].price;
+					}
+				}
+				System.out.println("최고 가격 제품 : " + kbdAry[index].name + "\t");
+				System.out.println("이 제품을 제외한 가격 총합 : " + sum + "원");
 			}
-			
-			else if(selectNo==5) {
+
+			else if (selectNo == 5) {
 				System.out.println("프로그램 종료");
 				return;
 			}
 		}
-             
+
 	}
 }

@@ -56,9 +56,12 @@ public class Book {
 	void getInfo() {
 		System.out.println("책 이름 : " + bookname);
 		System.out.println("1)종류 : " + type);
-		System.out.println("2)가격 : " + price+"원");
+		System.out.println("2)가격 : " + price + "원");
 		System.out.println("3)출판사 : " + company);
-		System.out.printf("4)도서번호 : %04d",isbn);
+		System.out.printf("4)도서번호 : %04d", isbn);
 	}
 
+	void setKind(String type) {
+		this.type = type;
+	}
 }
