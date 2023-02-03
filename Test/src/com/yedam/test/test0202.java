@@ -127,6 +127,16 @@ public class test0202 {
 			case 5:
 				System.out.println("프로그램 종료");
 				go = false;
+		
+				
+		
+				
+				
+				
+			
+			
+			
+			
 			}
 
 		}
