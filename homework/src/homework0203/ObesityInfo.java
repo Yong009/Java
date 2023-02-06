@@ -9,8 +9,8 @@ public class ObesityInfo extends StandardWeightInfo{
 //(2) public double getObesity() : 비만도를 구하는 기능
 //( * 비만도 : (Weight - 표준 체중)/표준체중 * 100 )
 
-	public ObesityInfo(String hname, int height, int bdwet, double stand,String obesity) {
-		super(hname, height, bdwet, stand);
+	public ObesityInfo(String hname, int height, int bdwet, double stand,double obesity) {
+		super(hname, height, bdwet);
 		this.obesity = obesity;
 		
 	}
@@ -18,7 +18,7 @@ public class ObesityInfo extends StandardWeightInfo{
 	
 	
 	// 필드
-	String obesity;
+	double obesity;
 
 	
 		
@@ -42,14 +42,28 @@ public class ObesityInfo extends StandardWeightInfo{
 		System.out.print(hname + "님의" + " ");
 		System.out.print("신장" + " " + height + "," + " ");
 		System.out.print("몸무게" + " " + bdwet + "," + " ");
+		String objesity2 = null;
 	
-		System.out.println("비만입니다.");}
+		if(getObesity()>50) {
+			System.out.println("비만입니다.");}
+		 else{
+			System.out.println("정상입니다");}
+		}
+
+
+
+
+
+	@Override
+	public double getObesity() {
+		double bmi =bdwet -getStandardWeight()/getStandardWeight()*100;
+		
+		return bmi;
+}
 	
 
-		
-	 
 	
-	
-	
+//	 
+
 	
 }

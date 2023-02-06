@@ -10,9 +10,9 @@ public class Human {
 
 	// 필드
 
-	String hname;
-	int height;
-	int bdwet;
+	protected String hname;
+	protected int height;
+	protected int bdwet;
 
 	// 생성자
 	public Human(String hname, int height, int bdwet) {
@@ -21,25 +21,15 @@ public class Human {
 		this.bdwet = bdwet;
 	}
 
-	public String getHname() {
-		return hname;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public int getBdwet() {
-		return bdwet;
-	}
+	
 
 	// 메소드
 	public void getInformation() {
-		System.out.println(hname);
-		System.out.println(height);
-		System.out.println(bdwet);
+		System.out.print("이름 : "+ hname+ "키 : "+height+" 몸무게 : "+bdwet);
+		
 	}
-
-}
 	
-
+	public double getObesity() {
+		return 0;
+	}
+}

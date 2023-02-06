@@ -10,11 +10,11 @@ public class StandardWeightInfo extends Human {
 //( * 표준 체중 : (Height - 100) * 0.9 )
 
 	// 필드
-	double stand;
+	
 
-	public StandardWeightInfo(String hname, int height, int bdwet, double stand) {
+	public StandardWeightInfo(String hname, int height, int bdwet) {
 		super(hname, height, bdwet);
-		this.stand = stand;
+		
 	}
 
 	// 생성자
@@ -23,13 +23,14 @@ public class StandardWeightInfo extends Human {
 
 	@Override
 	public void getInformation() {
-		System.out.print(hname + "님의" + " ");
-		System.out.print("신장" + " " + height + "," + " ");
-		System.out.print("몸무게" + " " + bdwet + "," + " ");
-		System.out.println("표준 체중  " +stand+" 입니다.");
+		super.getInformation();
+		System.out.printf("표준 체중 %f 입니다.\n" 
+		+getStandardWeight());
+		
 	}
 
 	public double getStandardWeight() {
-		return stand = (height - 100) * 0.9;
+		double result = (height - 100) * 0.9;
+		return result;
 	};
 }

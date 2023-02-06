@@ -28,15 +28,20 @@ public class EmpDept extends Employee{
 
 	
 
+	public String getDpt() {
+		return dpt;
+	}
+
+
+
 	@Override
 	public void getInformation() {
-		System.out.print("이름 : " + name+"\t" );
-		System.out.print("연봉 : " + salary+"\t");
+		super.getInformation();
 		System.out.println("부서 : " + dpt+"\t");
 	}
 	
 	public void print() {
-		System.out.println("수퍼클래스");
+		super.print();
 		System.out.println("서브클래스");
 	}
 	
