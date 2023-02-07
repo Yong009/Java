@@ -1,6 +1,6 @@
 package com.yedam.homework0206;
 
-public abstract class  Culture {
+public abstract class Culture {
 //	1) Culture 클래스를 정의한다.
 //- 제목, 참여감독 수, 참여배우 수, 관객수, 총점을 필드로 가진다.
 //- 제목, 참여감독 수, 참여배우 수는 생성자를 이용하여 값을 초기화한다.
@@ -20,41 +20,65 @@ public abstract class  Culture {
 	int score;
 	// 생성자
 
-	public Culture(String name,int dsu,int msu) {
+	public Culture(String name, int dsu, int msu) {
 		this.name = name;
-		this.dsu=dsu;
-		this.msu=msu;
+		this.dsu = dsu;
+		this.msu = msu;
 	}
 
 	// 메소드
 
-	public void setTotalScore(int score,int ssu) {
-		 apoint+=score;
-		System.out.println(apoint);  
-		 System.out.println(ssu+=1);
-
+	public void setTotalScore(int score) {
+		apoint += score;
+		ssu++;
 	}
 
 	public String getGrade() {
-		String star = "";
-		if(score>=80){
-			System.out.println("*****");
-			System.out.println(star);
-		} else if(score>=60&& score<80) {
-			System.out.println("****");
-			System.out.println(star);
-		} else if(score>=40 && score<60) {
-			System.out.println("***");
-			System.out.println(star);
-		}else if(score>=20 && score<40) {
-			System.out.println("**");
-			System.out.println(star);
-	} else if(score>=0 && score<20) {
-		System.out.println("*");
-		System.out.println(star);
-	} return star;
-		
-	} 
+
+		int avg = apoint / ssu;
+		String Grade = "";
+
+		switch (avg) {
+		case 1:
+			Grade = "*";
+			break;
+		case 2:
+			Grade = "**";
+			break;
+		case 3:
+			Grade = "***";
+			break;
+		case 4:
+			Grade = "****";
+			break;
+		case 5:
+			Grade = "*****";
+			break;
+		}
+		return Grade;
+	}
+//		for(int i=0; i<avg; i++) {
+//			grade += "*";
+//		}
+
+//		if(score>=80){
+//			System.out.println("*****");
+//			System.out.println(star);
+//		} else if(score>=60&& score<80) {
+//			System.out.println("****");
+//			System.out.println(star);
+//		} else if(score>=40 && score<60) {
+//			System.out.println("***");
+//			System.out.println(star);
+//		}else if(score>=20 && score<40) {
+//			System.out.println("**");
+//			System.out.println(star);
+//	} else if(score>=0 && score<20) {
+//		System.out.println("*");
+//		System.out.println(star);
+//	} return star;
+//		
+//	} 
 
 	public abstract void getInformation();
 }

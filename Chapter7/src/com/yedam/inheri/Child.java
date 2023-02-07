@@ -21,6 +21,6 @@ public class Child extends Parent{
    
 
 VIPPerson vip = new VIPPerson();
-       vip.MemberInfo();
+//       vip.MemberInfo();
 }
 

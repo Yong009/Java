@@ -16,13 +16,13 @@ public static void main(String[] args) {
 //	animal = new Cat();
 //	animal.sound();
 	
-	animalSound(new Dog());
-	animalSound(new Cat());
+//	animalSound(new Dog());
+//	animalSound(new Cat());
 	
 	//매개변수의 다형성을 활용한 추상 클래스 사용	
-	public static void animalSound(Animal animal){
-		animal.sound();
-	}
+//	public static void animalSound(Animal animal){
+//		animal.sound();
+//	}
 
 }
 

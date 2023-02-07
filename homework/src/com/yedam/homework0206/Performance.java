@@ -16,11 +16,9 @@ public class Performance extends Culture {
 		this.pkind = pkind;
 	}
 
-	//생성자
+	// 생성자
 
-	
-	
-	//메소드
+	// 메소드
 	@Override
 	public void getInformation() {
 		System.out.println(name);
@@ -30,5 +28,5 @@ public class Performance extends Culture {
 		System.out.println(apoint);
 		System.out.println(getGrade());
 	}
-	
+
 }
