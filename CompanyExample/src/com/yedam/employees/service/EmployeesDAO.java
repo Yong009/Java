@@ -13,7 +13,7 @@ public class EmployeesDAO extends DAO {
 
 	}
 
-	private static EmployeesDAO getInstance() {
+	static EmployeesDAO getInstance() {
 		if (employDao == null) {
 			employDao = new EmployeesDAO();
 		}
@@ -34,12 +34,12 @@ public class EmployeesDAO extends DAO {
 			while (rs.next()) {
 				employ = new Employees();
 				employ.setEmployeeId(rs.getInt("employee_id"));
-				employ.setFirstName(rs.getInt("fisrst_name"));
-				employ.setLastName(rs.getInt("last_name"));
-				employ.setEmail(rs.getInt("email"));
+				employ.setFirstName(rs.getString("fisrst_name"));
+				employ.setLastName(rs.getString("last_name"));
+				employ.setEmail(rs.getString("email"));
 				employ.setPhoneNumber(rs.getInt("phone_number"));
-				employ.setHireDate(rs.getInt("hire_date"));
-				employ.setJobId(rs.getInt("job_id"));
+				employ.setHireDate(rs.getString("hire_date"));
+				employ.setJobId(rs.getString("job_id"));
 				employ.setSalary(rs.getInt("salary"));
 				employ.setCommissionPct(rs.getInt("commission_pct"));
 
@@ -69,12 +69,12 @@ public class EmployeesDAO extends DAO {
 
 				employ = new Employees();
 				employ.setEmployeeId(rs.getInt("employee_id"));
-				employ.setFirstName(rs.getInt("fisrst_name"));
-				employ.setLastName(rs.getInt("last_name"));
-				employ.setEmail(rs.getInt("email"));
+				employ.setFirstName(rs.getString("fisrst_name"));
+				employ.setLastName(rs.getString("last_name"));
+				employ.setEmail(rs.getString("email"));
 				employ.setPhoneNumber(rs.getInt("phone_number"));
-				employ.setHireDate(rs.getInt("hire_date"));
-				employ.setJobId(rs.getInt("job_id"));
+				employ.setHireDate(rs.getString("hire_date"));
+				employ.setJobId(rs.getString("job_id"));
 				employ.setSalary(rs.getInt("salary"));
 				employ.setCommissionPct(rs.getInt("commission_pct"));
 			}
@@ -135,7 +135,7 @@ public class EmployeesDAO extends DAO {
 			String sql = "insert into emp values (?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, emp.getEmployeeId());
-			pstmt.setString(2, emp.getFisrtName());
+			pstmt.setString(2, emp.getFirstName());
 			pstmt.setString(3, emp.getLastName());
 			pstmt.setString(4, emp.getEmail());
 			pstmt.setInt(5, emp.getPhoneNumber());
