@@ -35,7 +35,7 @@ public class DepartmentsService {
 		}
 		
 	}
-	
+	//등록
 	public void insertDept() {
 		System.out.println("=============부서 생성============");
 		System.out.println("부서 번호>");

@@ -38,7 +38,7 @@ public class CoffeeDAO extends DAO {
 		Coffee coffee = null;
 		try {
 			conn();
-			// preparedstatement 경우
+			// prepareStatement 경우
 			String sql = "select * from coffee where coffee_menu = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
@@ -93,7 +93,7 @@ public class CoffeeDAO extends DAO {
 				// 서로 다른 row 데이터를 서로 다른 객체(주소)에 데이터를 담아주기 위함.
 				coffee = new Coffee();
 
-				// 하나의 row의 데이터를 coffeee 객체에 담아 줌.
+				// 하나의 row의 데이터를 coffee 객체에 담아 줌.
 				coffee.setCoffeeMenu(rs.getString("coffee_menu"));
 				coffee.setCoffeePrice(rs.getInt("coffee_price"));
 				coffee.setCoffeeExplain(rs.getString("coffee_explain"));
@@ -130,6 +130,7 @@ public class CoffeeDAO extends DAO {
 			// preparedstatement
 			String sql = "INSERT INTO coffee VALUES (?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
+			
 			pstmt.setInt(1, coffee.getCoffeeId());
 			pstmt.setString(2, coffee.getCoffeeMenu());
 			pstmt.setInt(3, coffee.getCoffeePrice());

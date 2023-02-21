@@ -1,6 +1,6 @@
 package com.yedam.employees.service;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Employees {
 	
@@ -28,10 +28,10 @@ public class Employees {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public String getHireDate() {
@@ -62,12 +62,25 @@ public class Employees {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String hireDate;
+	//java.sql.Date vs java.util.Date 창
+	//연월일              연월일시분초
+	//사용하는 방식이 서로 좀 .. 다르다ㅏ.
 	private String jobId;
 	private int salary;
 	private double commissionPct;
+	@Override
+	public String toString() {
+		return "Employees [employeeId=" + employeeId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", jobId=" + jobId
+				+ ", salary=" + salary + ", commissionPct=" + commissionPct + "]";
+	}
 	
+	//toString
 	
-	
+	//date 쓸려면 쿼리문에서 sysdate, emp_empNO.nextval 등을 쓴다.
+	//emp.setHireDate();
+	//Date hireDate = 
+	//날짜 입력한 값 가져오는 방법 = Date.valueof(sc.nextLine())
 }

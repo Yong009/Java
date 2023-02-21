@@ -20,6 +20,7 @@ public class EmployeesDAO extends DAO {
 		return employDao;
 	}
 
+	
 	// 모든 부서 조회
 	public List<Employees> getEmployeesList() {
 		List<Employees> list = new ArrayList<>();
@@ -34,10 +35,10 @@ public class EmployeesDAO extends DAO {
 			while (rs.next()) {
 				employ = new Employees();
 				employ.setEmployeeId(rs.getInt("employee_id"));
-				employ.setFirstName(rs.getString("fisrst_name"));
+				employ.setFirstName(rs.getString("first_name"));
 				employ.setLastName(rs.getString("last_name"));
 				employ.setEmail(rs.getString("email"));
-				employ.setPhoneNumber(rs.getInt("phone_number"));
+				employ.setPhoneNumber(rs.getString("phone_number"));
 				employ.setHireDate(rs.getString("hire_date"));
 				employ.setJobId(rs.getString("job_id"));
 				employ.setSalary(rs.getInt("salary"));
@@ -69,10 +70,10 @@ public class EmployeesDAO extends DAO {
 
 				employ = new Employees();
 				employ.setEmployeeId(rs.getInt("employee_id"));
-				employ.setFirstName(rs.getString("fisrst_name"));
+				employ.setFirstName(rs.getString("first_name"));
 				employ.setLastName(rs.getString("last_name"));
 				employ.setEmail(rs.getString("email"));
-				employ.setPhoneNumber(rs.getInt("phone_number"));
+				employ.setPhoneNumber(rs.getString("phone_number"));
 				employ.setHireDate(rs.getString("hire_date"));
 				employ.setJobId(rs.getString("job_id"));
 				employ.setSalary(rs.getInt("salary"));
@@ -138,7 +139,7 @@ public class EmployeesDAO extends DAO {
 			pstmt.setString(2, emp.getFirstName());
 			pstmt.setString(3, emp.getLastName());
 			pstmt.setString(4, emp.getEmail());
-			pstmt.setInt(5, emp.getPhoneNumber());
+			pstmt.setString(5, emp.getPhoneNumber());
 			pstmt.setString(6, emp.getHireDate());
 			pstmt.setInt(7, emp.getEmployeeId());
 			pstmt.setString(8, emp.getJobId());

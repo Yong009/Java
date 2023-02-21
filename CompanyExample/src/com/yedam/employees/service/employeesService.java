@@ -1,5 +1,6 @@
 package com.yedam.employees.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,6 +22,7 @@ public class employeesService {
 			System.out.println("수당 : " + list.get(i).getCommissionPct());
 		}
 	}
+	//사원 조회
 	public void getEmployees() {
 		System.out.println("사원 번호>");
 		int empNo = Integer.parseInt(sc.nextLine());
@@ -39,9 +41,9 @@ public class employeesService {
 			System.out.println("수당 : " + emp.getCommissionPct());
 		}
 	}
-	
+	//등록
 	public void insertEmp() {
-		System.out.println("=============사원 생성============");
+		System.out.println("=============사원 등록============");
 		System.out.println("사원 번호>");
 		int empNo = Integer.parseInt(sc.nextLine());
 		System.out.println("성");
@@ -51,7 +53,7 @@ public class employeesService {
 		System.out.println("이메일");
 		String empEmail = sc.nextLine()	;
 		System.out.println("폰번호");
-		int empPhone = Integer.parseInt(sc.nextLine());
+		String empPhone = sc.nextLine();
 		System.out.println("입사일");
 		String empHire = sc.nextLine();
 		System.out.println("업무 이름");
