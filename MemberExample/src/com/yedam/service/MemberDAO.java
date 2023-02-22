@@ -76,7 +76,7 @@ public class MemberDAO extends DAO {
 		int result = 0;
 		try {
 			conn();
-			String sql = "pdate member\r\n" + "set member_phone = ?\r\n" + "where member_id = ?";
+			String sql = "update member\r\n" + "set member_phone = ?\r\n" + "where member_id = ?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberPhone());

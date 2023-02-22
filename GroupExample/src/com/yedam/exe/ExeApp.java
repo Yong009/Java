@@ -15,7 +15,7 @@ public class ExeApp {
 	}
 	
 	private void run() {
-		String menu = "";
+	
 		while(run) {
 			if(SgroupService.sgrInfo != null) {
 				loginMenu();
@@ -44,7 +44,7 @@ public class ExeApp {
 			break;
 		
 		case "3":
-			sg.getSgroup()
+			sg.getSgroup();
 			break;
 		
 		case "4":
@@ -55,6 +55,19 @@ public class ExeApp {
 			System.out.println("프로그램 종료");
 			break;
 		}
+	}
+	
+	private void logoutMenu() {
+		System.out.println("1.로그인 | 2. 종료");
+		System.out.println("입력>");
+		menu = sc.nextLine();
+		if(menu.equals("1")){
+			sg.login();
+		} else if (menu.equals("2")) {
+			run = false;
+			System.out.println("프로그램 종료");
+		}
+				 
 	}
 	
 }
