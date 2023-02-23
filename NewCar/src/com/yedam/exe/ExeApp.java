@@ -34,7 +34,8 @@ public class ExeApp {
 				} else {
 					loginMenu();
 				}
-			} if (NewCarService.memInfo == null) {
+			}
+			if (NewCarService.memInfo == null) {
 
 				logoutMenu();
 			}
@@ -45,8 +46,12 @@ public class ExeApp {
 	private void SuperloginMenu() {
 		System.out.println(
 				"-----------------------------------------------------------------------------------------------------------------------------");
-		System.out.println(
-				"--1.전체 회원 조회 | 2. 전체 차량 조회 | 3. 단건 조회 | 4. 정보 수정  | 5.회원 강제 탈퇴  | 6.수익,판매량 | 7.블랙리스트 | 8.랭킹");
+		System.out.println("========================조회========================" + "\n" + "\n"
+				+ "   1.전체 회원 조회 | 2.전체 차량 조회 | 3.회원 조회 | 4.차량 조회" + "\n" + "\n"
+				+ "======================회원관리======================" + "\n" + "\n" + "   5.회원 정보 수정  | 6.회원 탈퇴" + "\n"
+				+ "\n" + "======================차량관리======================" + "\n" + "\n"
+				+ "   7.차량 등록 | 8.차량 정보 수정  | 9.차량 삭제" + "\n" + "\n" + "======================서비스======================"
+				+ "\n" + "\n" + "   10.대여 현황 | 11.수익 | 12.블랙리스트 | 13.리뷰 | 14.보험 | 15.쿠폰 | 16.랭킹 | 17. 로그아웃" + "\n");
 		System.out.println(
 				"------------------------------------------------------------------------------------------------------------------------------");
 		System.out.println("입력>");
@@ -63,48 +68,55 @@ public class ExeApp {
 			ps.getMember();
 			break;
 		case "4":
-
+			ps.getCar();
 			break;
-		case "5":
 
+		case "5":
+			ps.modifyMember();
 			break;
 		case "6":
-
+			ps.deleteMember();
 			break;
 		case "7":
-
+			ps.insertCar();
 			break;
 		case "8":
-
+			ps.modifyCar();
 			break;
 		case "9":
-
+			ps.deleteCar();
 			break;
-
+		case "17":
+			logoutMenu();
+			break;
+		
 		default:
 			break;
 		}
 	}
 
 	private void loginMenu() {
-		System.out.println("-------------------------------------------------------------------------------------");
-		System.out.println("--1.정보 수정 | 2. 대여(예약) | 3. 가격 | 4. 보험 | 5. 리뷰 | 6. 쿠폰 | 7. 블랙리스트 | 8.랭킹");
-		System.out.println("-------------------------------------------------------------------------------------");
+		System.out.println(
+				"--------------------------------------------------------------------------------------------");
+		System.out.println("   1. 마이페이지 | 2. 정보 수정 | 3. 회원 탈퇴 | 4. 렌트(예약) | 5. 렌트 취소 "
+				+"\n"+"\n"+"   6. 정보 | 7. 쿠폰 | 8. 리뷰 | 9. 랭킹 | 10. 로그아웃 ");
+		System.out.println(
+				"--------------------------------------------------------------------------------------------");
 		System.out.println("입력>");
 		menu = sc.nextLine();
 
 		switch (menu) {
 		case "1":
-
+			ps.getMyMember();
 			break;
 		case "2":
-
+			ps.modifyMyMember();
 			break;
 		case "3":
-
+			ps.deleteMyMember();
 			break;
 		case "4":
-
+			ps.getMR();
 			break;
 		case "5":
 
@@ -119,6 +131,12 @@ public class ExeApp {
 
 			break;
 
+		case "9":
+			
+			break;
+		case "10":
+			logoutMenu();
+			break;
 		default:
 			break;
 		}
@@ -126,12 +144,14 @@ public class ExeApp {
 	}
 
 	private void logoutMenu() {
-		System.out.println("1. 로그인 | 2. 종료");
+		System.out.println("1. 로그인 | 2. 회원가입 | 3. 종료");
 		System.out.println("입력>");
 		menu = sc.nextLine();
 		if (menu.equals("1")) {
 			ps.login();
 		} else if (menu.equals("2")) {
+			ps.insertNewMember();
+		} else if (menu.equals("3")) {
 			run = false;
 			System.out.println("프로그램 종료");
 		}

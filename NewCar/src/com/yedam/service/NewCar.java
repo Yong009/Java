@@ -2,71 +2,77 @@ package com.yedam.service;
 
 public class NewCar {
 
-	//회원필드
+	// 회원필드
 	private String memberId;
 	private String memberPw;
 	private String memberName;
 	private String memberNumber;
-	
-		
-	//차 기본필드
+
+	// 차 기본필드
 	private int carNumber;
 	private String carName;
 	private String carKind;
-	
-	//차 상태 필드
+
+	// 차 상태 필드
 //	private int carNumber;
 	private int carYear;
 	private int carCount;
 	private int carOil;
 	private int carEnoil;
 	private int carTire;
-	
-	//리뷰필드
-	//private String memberId;
-	//private String carName;
+
+	// 리뷰필드
+	// private String memberId;
+	// private String carName;
 	private String reviewRv;
+
 	
-	//대여 
-	//private String memberId;
-	//private String carID;
-	//private String carName;
-	//private String carKind;
-	private String rent;
-	
-	//주차필드
-	//private String carKind
+
+	// 주차필드
+	// private String carKind
 	private String locationPark;
-	
-	
-	//중고사고팔기
-	//private String memberId;
+
+	// 중고사고팔기
+	// private String memberId;
 	private String dealDl;
 	private String dealText;
-	
-	//가격필드
+
+	// 가격필드
 	private int pricePrice;
 	private int priceOil;
-	
-	
-	//보험 필드
-	//private String carKind;
+
+	// 보험 필드
+	// private String carKind;
 	private String insurance;
-	
-	
-	//쿠폰 필드
+
+	// 쿠폰 필드
 	private int couponNumber;
 	private int couponPrice;
-	
-	//등급 필드
+
+	// 등급 필드
 	private String gradeName;
 	private String gradeDc;
+
+	// 예약 필드
+	// private String memberId;
+	// private int carId;
+//	private String date;
+
+	// 렌트
+	//private int carNumber;
+	private String rentDate;
+	private int rentDistance;
+	private String rentReserved;
 	
-	//예약 필드
-	//private String memberId;
-	//private int carId;
-	private String date;
 	
+	
+	
+	
+	
+	
+
+	
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -103,7 +109,7 @@ public class NewCar {
 		return carNumber;
 	}
 
-	public void setCarNumber(int carId) {
+	public void setCarNumber(int carNumber) {
 		this.carNumber = carNumber;
 	}
 
@@ -171,12 +177,30 @@ public class NewCar {
 		this.reviewRv = reviewRv;
 	}
 
-	public String getRent() {
-		return rent;
+	
+
+	public String getRentDate() {
+		return rentDate;
 	}
 
-	public void setRent(String rent) {
-		this.rent = rent;
+	public void setRentDate(String rentDate) {
+		this.rentDate = rentDate;
+	}
+
+	public int getRentDistance() {
+		return rentDistance;
+	}
+
+	public void setRentDistance(int rentDistance) {
+		this.rentDistance = rentDistance;
+	}
+
+	public String getRentReserved() {
+		return rentReserved;
+	}
+
+	public void setRentReserved(String rentRerserved) {
+		this.rentReserved = rentRerserved;
 	}
 
 	public String getLocationPark() {
@@ -260,11 +284,11 @@ public class NewCar {
 	}
 
 	public String getDate() {
-		return date;
+		return rentDate;
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.rentDate = date;
 	}
 
 	public String getRankingPrice() {
@@ -291,31 +315,12 @@ public class NewCar {
 		this.penaltyStop = penaltyStop;
 	}
 
-	//랭킹 필드
+	// 랭킹 필드
 	private String rankingPrice;
 	private String rankingCount;
-	
-	//패널티
-	//private String memberId;
+
+	// 패널티
+	// private String memberId;
 	private String penaltyStop;
 
-	
-
-
-
-
-
 }
-
-
-
-	
-	
-
-	
-	
-	
-	
-	
-
-

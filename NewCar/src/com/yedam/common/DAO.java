@@ -35,7 +35,7 @@ public class DAO {
 
 		try {
 			getProperties();
-			
+
 			Class.forName(driver);
 
 			conn = DriverManager.getConnection(url, id, pw);
