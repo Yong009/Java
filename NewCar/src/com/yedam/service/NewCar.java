@@ -8,11 +8,15 @@ public class NewCar {
 	private String memberName;
 	private String memberNumber;
 
+	
+	
 	// 차 기본필드
 	private int carNumber;
 	private String carName;
 	private String carKind;
 
+	
+	
 	// 차 상태 필드
 //	private int carNumber;
 	private int carYear;
@@ -21,6 +25,8 @@ public class NewCar {
 	private int carEnoil;
 	private int carTire;
 
+	
+	
 	// 리뷰필드
 	// private String memberId;
 	// private String carName;
@@ -32,19 +38,30 @@ public class NewCar {
 	// private String carKind
 	private String locationPark;
 
+	
+	
 	// 중고사고팔기
 	// private String memberId;
 	private String dealDl;
 	private String dealText;
 
+	
+	
+	
 	// 가격필드
 	private int pricePrice;
 	private int priceOil;
-
+	//private int car_number
+	
+	
+	
 	// 보험 필드
-	// private String carKind;
+	// private String carNumber;
 	private String insurance;
-
+	
+	
+	
+	
 	// 쿠폰 필드
 	private int couponNumber;
 	private int couponPrice;
@@ -59,11 +76,13 @@ public class NewCar {
 //	private String date;
 
 	// 렌트
+	
+	private int rentId;
 	//private int carNumber;
 	private String rentDate;
 	private int rentDistance;
 	private String rentReserved;
-	
+	//private String member_id;
 	
 	
 	
@@ -76,6 +95,8 @@ public class NewCar {
 	public String getMemberId() {
 		return memberId;
 	}
+
+	
 
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
@@ -105,6 +126,11 @@ public class NewCar {
 		this.memberNumber = memberNumber;
 	}
 
+	
+	
+	
+	
+	
 	public int getCarNumber() {
 		return carNumber;
 	}
@@ -129,6 +155,11 @@ public class NewCar {
 		this.carKind = carKind;
 	}
 
+	
+	
+	
+	
+	
 	public int getCarYear() {
 		return carYear;
 	}
@@ -169,6 +200,9 @@ public class NewCar {
 		this.carTire = carTire;
 	}
 
+		
+		
+	
 	public String getReviewRv() {
 		return reviewRv;
 	}
@@ -178,8 +212,17 @@ public class NewCar {
 	}
 
 	
-
-	public String getRentDate() {
+	
+	
+	
+	public int getRentId() {
+		return rentId;
+	}
+	public void setRentId(int rentId) {
+		this.rentId = rentId;
+	}
+	
+		public String getRentDate() {
 		return rentDate;
 	}
 
@@ -199,10 +242,15 @@ public class NewCar {
 		return rentReserved;
 	}
 
-	public void setRentReserved(String rentRerserved) {
-		this.rentReserved = rentRerserved;
+	public void setRentReserved(String rentReserved) {
+		this.rentReserved = rentReserved;
 	}
 
+	
+	
+		
+	
+	
 	public String getLocationPark() {
 		return locationPark;
 	}
@@ -211,6 +259,12 @@ public class NewCar {
 		this.locationPark = locationPark;
 	}
 
+	
+	
+	
+	
+	
+	
 	public String getDealDl() {
 		return dealDl;
 	}
@@ -243,6 +297,12 @@ public class NewCar {
 		this.priceOil = priceOil;
 	}
 
+	
+	
+	
+	
+	
+	
 	public String getInsurance() {
 		return insurance;
 	}
@@ -251,6 +311,11 @@ public class NewCar {
 		this.insurance = insurance;
 	}
 
+	
+	
+	
+	
+	
 	public int getCouponNumber() {
 		return couponNumber;
 	}
@@ -267,6 +332,12 @@ public class NewCar {
 		this.couponPrice = couponPrice;
 	}
 
+	
+	
+	
+	
+	
+	
 	public String getGradeName() {
 		return gradeName;
 	}
@@ -283,13 +354,11 @@ public class NewCar {
 		this.gradeDc = gradeDc;
 	}
 
-	public String getDate() {
-		return rentDate;
-	}
-
-	public void setDate(String date) {
-		this.rentDate = date;
-	}
+	
+	
+	
+	
+	
 
 	public String getRankingPrice() {
 		return rankingPrice;
@@ -323,4 +392,17 @@ public class NewCar {
 	// private String memberId;
 	private String penaltyStop;
 
+
+
+
+
+
+
+
+
+	
+
+	
+	
+	
 }
