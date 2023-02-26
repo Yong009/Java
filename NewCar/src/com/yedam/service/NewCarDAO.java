@@ -487,7 +487,28 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
+	
+	public int CancelPrice(NewCar nc) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "Update price set price_priceoil=(select rent_distance*100 from rent where car_number = ?)  where car_number= ?";
+			pstmt = conn.prepareStatement(sql);
 
+			pstmt.setInt(1, nc.getCarNumber());
+			pstmt.setInt(2, nc.getCarNumber());
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	
+	
 	// 6. 렌트 반납
 
 	public int RentReturn(NewCar nc) {
@@ -507,7 +528,12 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
-
+	
+	
+	
+	
+	
+	
 	// 7. 가격
 	public NewCar getPrice(String newcarKey) {
 		NewCar nc = null;

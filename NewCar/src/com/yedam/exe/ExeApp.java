@@ -116,12 +116,14 @@ public class ExeApp {
 			break;
 		case "3":
 			ps.deleteMyMember();
+			logoutMenu();
 			break;
 		case "4":
 			ps.Rent();
 			break;
 		case "5":
 			ps.CancelRent();
+			ps.CancelPrice();
 			break;
 		case "6":
 			ps.RentReturn();

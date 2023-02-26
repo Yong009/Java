@@ -444,7 +444,26 @@ public class NewCarService {
 			System.out.println("렌트 실패");
 		}
 	}
+	
+	public void CancelPrice() {
+		
 
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+//		System.out.println("예약자명(ex)아이디 기입)>");
+//		String ncMemberId = sc.nextLine();
+
+		NewCar nc = new NewCar();
+
+		nc.setCarNumber(ncNumber);
+
+		int result = NewCarDAO.getInstance().CancelPrice(nc);
+
+		
+	}
+	
+	
 	//6. 렌트 반납
 	public void RentReturn() {
 		System.out.println("-------------렌트취소---------------");
