@@ -57,11 +57,34 @@ public class NewCar {
 	
 	// 보험 필드
 	// private String carNumber;
-	private String insurance;
+	private String inInsurance;
+	private int inPrice;
+	
+	//수입
 	
 	
-	
-	
+	public String getInInsurance() {
+		return inInsurance;
+	}
+
+
+
+	public void setInInsurance(String inInsurance) {
+		this.inInsurance = inInsurance;
+	}
+
+
+
+	public int getInPrice() {
+		return inPrice;
+	}
+
+
+
+	public void setInPrice(int inPrice) {
+		this.inPrice = inPrice;
+	}
+
 	// 쿠폰 필드
 	private int couponNumber;
 	private int couponPrice;
@@ -303,14 +326,7 @@ public class NewCar {
 	
 	
 	
-	public String getInsurance() {
-		return insurance;
-	}
-
-	public void setInsurance(String insurance) {
-		this.insurance = insurance;
-	}
-
+	
 	
 	
 	

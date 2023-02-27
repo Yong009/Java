@@ -269,8 +269,13 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
-
-	// 9. 차량 수정
+	
+	// 9. 차량 교체
+//	public int fixCar() {
+//		
+//	}
+	
+	// 10. 차량 수정
 
 	public int modifyCar(NewCar nc) {
 		int result = 0;
@@ -291,7 +296,7 @@ public class NewCarDAO extends DAO {
 		return result;
 	}
 
-	// 10.차량 삭제
+	// 11.차량 삭제
 
 	public int deleteCar(NewCar n) {
 		int result = 0;
@@ -311,7 +316,7 @@ public class NewCarDAO extends DAO {
 		return result;
 	}
 
-	// 10. 렌트 현황
+	// 12. 렌트 현황
 
 	public List<NewCar> getRentList() {
 		List<NewCar> list = new ArrayList<>();
@@ -344,7 +349,69 @@ public class NewCarDAO extends DAO {
 		return list;
 	}
 
+	// 13. 보험 현황
+	public List<NewCar> getInsuranceList() {
+		List<NewCar> list = new ArrayList<>();
 
+		NewCar nc = null;
+		try {
+			conn();
+			String sql = "select * from insurance";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				nc = new NewCar();
+				nc.setMemberId(rs.getString("member_id"));
+				nc.setInInsurance(rs.getString("in_insurance"));
+				nc.setInPrice(rs.getInt("in_price"));
+				nc.setCarNumber(rs.getInt("car_number"));
+
+				list.add(nc);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return list;
+	}
+	
+	//14. 수익
+	public int Income(int money) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "insert into income values (sysdate,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, money);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
+	
+	public int Income2() {
+		int result = 0;
+		try {
+			conn();
+			String sql = "select sum(income_income)\r\n"
+					+ "from income";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				result = rs.getInt("sum(income_income)");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}return result;
+	}
 	// 유저-------------------------------------------------------------------------------------------------------
 
 	// 1.마이 페이지
@@ -405,6 +472,32 @@ public class NewCarDAO extends DAO {
 		return nc;
 	}
 
+	// 1-2 내 보험 조회
+	public NewCar getMyInsurance(String newcarKey) {
+		NewCar nc = null;
+
+		try {
+			conn();
+			String sql = "select * from insurance where member_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newcarKey);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				nc = new NewCar();
+				nc.setInInsurance(rs.getString("In_insurance"));
+				nc.setMemberId(rs.getString("member_id"));
+				nc.setInPrice(rs.getInt("In_price"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return nc;
+	}
+
 	// 2. 정보 수정
 	public int modifyMyMember(NewCar nc) {
 		int result = 0;
@@ -442,8 +535,6 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
-
-
 
 	// 4. 렌트
 	public int Rent(NewCar nc) {
@@ -487,16 +578,16 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
-	
+
 	public int CancelPrice(NewCar nc) {
 		int result = 0;
 		try {
 			conn();
-			String sql = "Update price set price_priceoil=(select rent_distance*100 from rent where car_number = ?)  where car_number= ?";
+			String sql = "Update price set price_priceoil= null where car_number= ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, nc.getCarNumber());
-			pstmt.setInt(2, nc.getCarNumber());
+
 			result = pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -506,9 +597,7 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
-	
-	
-	
+
 	// 6. 렌트 반납
 
 	public int RentReturn(NewCar nc) {
@@ -528,12 +617,7 @@ public class NewCarDAO extends DAO {
 		}
 		return result;
 	}
-	
-	
-	
-	
-	
-	
+
 	// 7. 가격
 	public NewCar getPrice(String newcarKey) {
 		NewCar nc = null;
@@ -554,8 +638,8 @@ public class NewCarDAO extends DAO {
 				nc.setCarName(rs.getString("car_name"));
 				nc.setCarKind(rs.getString("car_Kind"));
 				nc.setPricePrice(rs.getInt("price_price"));
-				nc.setPriceOil(rs.getInt("price_priceoil"));
 				nc.setRentDistance(rs.getInt("rent_distance"));
+				nc.setPriceOil(rs.getInt(("rent_distance")) * 100);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -565,5 +649,72 @@ public class NewCarDAO extends DAO {
 		return nc;
 	}
 
-	
+	// 7-1 보험 조회
+	public NewCar getInsurance(int newcarKey) {
+		NewCar ns = null;
+
+		try {
+			conn();
+			String sql = "select nvl(member_id,0) nvl,In_price, IN_insurance,car_number from insurance where car_number = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, newcarKey);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				ns = new NewCar();
+				ns.setInPrice(rs.getInt("In_price"));
+				ns.setInInsurance(rs.getString("In_Insurance"));
+				ns.setMemberId(rs.getString("nvl"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return ns;
+	}
+
+	// 8 보험
+	public int insertInsurance(NewCar ns) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "Update insurance set in_insurance = ?, member_id = ? where car_number = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ns.getInInsurance());
+			pstmt.setString(2, ns.getMemberId());
+			pstmt.setInt(3, ns.getCarNumber());
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+
+	// 8-1 보험 취소
+
+	public int CancelInsurance(NewCar ns) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "Update Insurance set in_insurance = 'n', member_id=null  where car_number= ?";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, ns.getCarNumber());
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconn();
+		}
+		return result;
+	}
+
 }

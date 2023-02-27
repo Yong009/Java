@@ -236,8 +236,10 @@ public class NewCarService {
 		insertNewCar();
 		insertNewCondition();
 	}
-
-	// 9. 차량 수정
+	
+	// 9. 차량 교체
+	
+	// 10. 차량 수정
 	public void modifyCar() {
 		System.out.println("-------------차 이름 변경---------------");
 		System.out.println("차종>");
@@ -258,7 +260,7 @@ public class NewCarService {
 		}
 	}
 
-	// 10.차량 삭제
+	// 11.차량 삭제
 
 	public void deleteCar() {
 		System.out.println("-----------차량 삭제--------------");
@@ -278,7 +280,7 @@ public class NewCarService {
 
 	}
 
-	// 10. 렌트 현황 조회
+	// 12. 렌트 현황 조회
 	public void getRentList() {
 		List<NewCar> list = NewCarDAO.getInstance().getRentList();
 		for (int i = 0; i < list.size(); i++) {
@@ -299,7 +301,33 @@ public class NewCarService {
 		}
 	}
 
+	// 13. 보험 현황 조회
+	public void getInsuranceList() {
+		List<NewCar> list = NewCarDAO.getInstance().getInsuranceList();
+		int count = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getMemberId() == null) {
+				count++;
+			} else {
+				System.out.println("차량 번호 : " + list.get(i).getCarNumber());
+				System.out.println("회원 ID : " + list.get(i).getMemberId());
+				System.out.println("보험가입여부 : " + list.get(i).getInInsurance());
+				System.out.println("------------------------------------------");
+			}
+		}
+		if (count == list.size()) {
+			System.out.println("조회된 값이 없습니다.");
+		}
 
+	}
+
+	// 14. 수익
+	int money = 0;
+
+	public void getIncome() {
+		int result = NewCarDAO.getInstance().Income2();
+		System.out.println(result);
+	}
 	// 유저-----------------------------------------------------------------
 
 	// 1. 마이페이지
@@ -332,16 +360,43 @@ public class NewCarService {
 		}
 	}
 
+	// 1-2 보험 조회
+	public void getMyInsurance() {
+		NewCar nc = NewCarDAO.getInstance().getMyInsurance(memInfo.getMemberId());
+
+		if (nc == null) {
+			System.out.println("보험 가입하지 않았습니다.");
+
+		} else {
+			System.out.println("보험가입여부 : " + nc.getInInsurance());
+		}
+
+	}
+
 	public void getMR() {
 		getMyMember();
 
 		System.out.println("------------나의 렌트 조회-------------");
 		NewCar nc = NewCarDAO.getInstance().getMyRent(memInfo.getMemberId());
+
 		if (nc != null) {
 			getMyRent();
+
 		} else {
 			System.out.println("조회된 결과 없음");
 		}
+
+		System.out.println("-------------보험 조회-----------------");
+
+		NewCar ns = NewCarDAO.getInstance().getMyInsurance(memInfo.getMemberId());
+
+		if (ns != null) {
+			getMyInsurance();
+
+		} else {
+			System.out.println("조회된 결과 없음");
+		}
+
 	}
 
 	// 2. 정보 수정
@@ -401,9 +456,12 @@ public class NewCarService {
 		String ncReserved = sc.nextLine();
 //		System.out.println("예약자명(ex)아이디 기입)>");
 //		String ncMemberId = sc.nextLine();
+		System.out.println("보험(y/n)>");
+		String ncIn = sc.nextLine();
 
 		NewCar nc = new NewCar();
 		nc.setRentId(ncRentId);
+		nc.setInInsurance(ncIn);
 		nc.setCarNumber(ncNumber);
 		nc.setRentDate(ncDate);
 		nc.setRentDistance(ncDistance);
@@ -411,6 +469,14 @@ public class NewCarService {
 		nc.setMemberId(memInfo.getMemberId());
 
 		int result = NewCarDAO.getInstance().Rent(nc);
+
+		if (ncIn.equals("y")) {
+
+			int result2 = NewCarDAO.getInstance().insertInsurance(nc);
+			System.out.println("보험 가입했습니다.");
+		} else {
+			System.out.println("보험 가입하지 않았습니다.");
+		}
 
 		if (result > 0) {
 			System.out.println("렌트 완료");
@@ -437,16 +503,126 @@ public class NewCarService {
 		nc.setCarNumber(ncNumber);
 
 		int result = NewCarDAO.getInstance().CancelRent(nc);
+		int result2 = NewCarDAO.getInstance().CancelPrice(nc);
+		int result3 = NewCarDAO.getInstance().CancelInsurance(nc);
 
 		if (result > 0) {
-			System.out.println("렌트 완료");
+			System.out.println("취소 완료");
 		} else {
-			System.out.println("렌트 실패");
+			System.out.println("취소 실패");
 		}
 	}
-	
+
+	// 6. 렌트 반납 및 결제
+	public void RentReturn() {
+		System.out.println("-------------렌트반납---------------");
+
+		// 결제
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+		System.out.println("=============결제 금액=============\n");
+		NewCar ns = NewCarDAO.getInstance().getPrice(memInfo.getMemberId());
+		NewCar nd = NewCarDAO.getInstance().getInsurance(ncNumber);
+		int price = 0;
+		if (nd==null) {
+			price = (ns.getPricePrice() + ns.getPriceOil());
+			System.out.println("렌트 번호 : " + ns.getRentId());
+			System.out.println("차량 번호 : " + ns.getCarNumber());
+			System.out.println("차량 이름 : " + ns.getCarName());
+			System.out.println("차종 : " + ns.getCarKind());
+			System.out.println("총 이용한 거리 : " + ns.getRentDistance());
+			System.out.println("기본 가격 : " + ns.getPricePrice());
+			System.out.println("기름값 : " + ns.getPriceOil());
+
+			System.out.println("\n총 금액 " + price + "\n");
+		} else  {
+			price =(ns.getPricePrice() + ns.getPriceOil() + nd.getInPrice());
+			System.out.println("렌트 번호 : " + ns.getRentId());
+			System.out.println("차량 번호 : " + ns.getCarNumber());
+			System.out.println("차량 이름 : " + ns.getCarName());
+			System.out.println("차종 : " + ns.getCarKind());
+			System.out.println("총 이용한 거리 : " + ns.getRentDistance());
+			System.out.println("기본 가격 : " + ns.getPricePrice());
+			System.out.println("기름값 : " + ns.getPriceOil());
+			System.out.println("보험료 : " + nd.getInPrice());
+			System.out.println("\n총 금액 " + price + "\n");
+		}
+
+		boolean run = true;
+		while (run) {
+			System.out.println("내신 금액>");
+			int pay = Integer.parseInt(sc.nextLine());
+			if (nd.getInInsurance().equals("n")) {
+				if (ns.getPriceOil() + ns.getPricePrice() > pay) {
+					System.out.println("\n결제 금액이 부족합니다");
+				} else {
+
+				}
+			}
+			if (nd.getInInsurance().equals("y")) {
+
+				if (ns.getPriceOil() + ns.getPricePrice() + nd.getInPrice() > pay) {
+					System.out.println("\n결제 금액이 부족합니다");
+				}
+			} else {
+
+			}
+
+			NewCar nc = new NewCar();
+
+			nc.setCarNumber(ncNumber);
+
+			// 반납
+			int result = NewCarDAO.getInstance().RentReturn(ns);
+
+			if (result > 0) {
+
+				System.out.println(pay - (ns.getPriceOil() + ns.getPricePrice() + nd.getInPrice()) + "을 거슬러 드리겠습니다.");
+				System.out.println("\n반납 완료");
+				money += price;
+				int re = NewCarDAO.getInstance().Income(price);
+				
+				int result2 = NewCarDAO.getInstance().CancelPrice(ns);
+				int result3 = NewCarDAO.getInstance().CancelInsurance(ns);
+				run = false;
+			} else {
+				System.out.println("\n반납 실패");
+			}
+		}
+	}
+
+	// 7. 가격
+
+	public void getPrice() {
+
+		NewCar nc = NewCarDAO.getInstance().getPrice(memInfo.getMemberId());
+
+		NewCar is = NewCarDAO.getInstance().getInsurance(memInfo.getCarNumber());
+
+		if (nc == null) {
+			System.out.println("조회된 결과 없음");
+		} else {
+			System.out.println("렌트 번호 : " + nc.getRentId());
+			System.out.println("차량 번호 : " + nc.getCarNumber());
+			System.out.println("차량 이름 : " + nc.getCarName());
+			System.out.println("차종 : " + nc.getCarKind());
+			System.out.println("총 이용한 거리 : " + nc.getRentDistance());
+			System.out.println("기본 가격 : " + nc.getPricePrice());
+			System.out.println("기름값 : " + nc.getPriceOil());
+			
+			if (is == null) {
+				System.out.println("보험 가입하지 않았습니다.");
+				System.out.println("\n총 금액 " + (nc.getPricePrice() + nc.getPriceOil()));
+			} else {
+				System.out.println("보험료 : " + is.getInPrice());
+				System.out.println("\n총 금액 " + (nc.getPricePrice() + nc.getPriceOil() + is.getInPrice()));
+				money += is.getInPrice();
+			}
+		}
+	}
+
 	public void CancelPrice() {
-		
 
 		System.out.println("차량 번호>");
 		int ncNumber = Integer.parseInt(sc.nextLine());
@@ -460,13 +636,48 @@ public class NewCarService {
 
 		int result = NewCarDAO.getInstance().CancelPrice(nc);
 
-		
 	}
-	
-	
-	//6. 렌트 반납
-	public void RentReturn() {
-		System.out.println("-------------렌트취소---------------");
+
+	// 7-1 보험 조회
+
+	public void getInsurance() {
+
+		NewCar nc = NewCarDAO.getInstance().getMyRent(memInfo.getMemberId());
+
+		if (nc == null) {
+			System.out.println("조회된 결과 없음");
+		} else {
+			System.out.println("보험료 : " + nc.getInPrice());
+		}
+	}
+
+	// 8. 보험
+	public void insertInsurance() {
+		System.out.println("-----------보험 가입-------------");
+		System.out.println("보험 하실여부(y/n>");
+		String ncin = sc.nextLine();
+
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+		NewCar nc = new NewCar();
+		nc.setCarNumber(ncNumber);
+		nc.setInInsurance(ncin);
+		nc.setMemberId(memInfo.getMemberId());
+
+		int result = NewCarDAO.getInstance().insertInsurance(nc);
+
+		if (result > 0) {
+			System.out.println("보험 등록 완료");
+
+		} else {
+			System.out.println("보험 등록 실패");
+		}
+	}
+
+	// 8-1 보험 취소
+	public void CancelInsurance() {
+		System.out.println("-------------보험 취소---------------");
 //		System.out.println("수정할 회원 ID");
 //		String ncId = sc.nextLine();
 
@@ -480,38 +691,13 @@ public class NewCarService {
 
 		nc.setCarNumber(ncNumber);
 
-		int result = NewCarDAO.getInstance().RentReturn(nc);
+		int result = NewCarDAO.getInstance().CancelInsurance(nc);
 
 		if (result > 0) {
-			System.out.println("반납 완료");
+			System.out.println("취소 완료");
 		} else {
-			System.out.println("반납 실패");
+			System.out.println("취소 실패");
 		}
 	}
 
-	//7. 가격
-	
-	public void getPrice() {
-	
-		
-	NewCar nc = NewCarDAO.getInstance().getPrice(memInfo.getMemberId());
-	
-	if (nc == null) {
-		System.out.println("조회된 결과 없음");
-	} else {
-		System.out.println("렌트 번호 : " + nc.getRentId());
-		System.out.println("차량 번호 : " + nc.getCarNumber());
-		System.out.println("차량 이름 : " + nc.getCarName());
-		System.out.println("차종 : " + nc.getCarKind());
-		System.out.println("총 이용한 거리 : " + nc.getRentDistance());
-		System.out.println("기본 가격 : "+ nc.getPricePrice());
-		System.out.println("기름값 : " + nc.getPriceOil());
-		System.out.println("총 금액 " + (nc.getPricePrice()+nc.getPriceOil()));
-	}
-}
-	
-	//8. 보험
-	
-	
-	
 }
