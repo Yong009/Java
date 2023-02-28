@@ -17,32 +17,39 @@ public class NewCarService {
 		String memberPw = sc.nextLine();
 
 		member = NewCarDAO.getInstance().login(memberID);
+		boolean run = true;
+		
+			if (member != null) {
 
-		if (member != null) {
+				{
+					if (memberID.equals("ge")) {
+						if (member.getMemberPw().equals(memberPw)) {
+							System.out.println("로그인 되었습니다.");
+							System.out.println("♬♬♬관리자로 접속하였습니다.♬♬♬");
+							memInfo = member;
+							
+						} else {
+							System.out.println("비밀번호가 틀립니다.");
+						}
+					} else if (member.getMemberPw().equals(memberPw)) {
+						System.out.println("로그인 되었습니다.");
+						
+						System.out.println("   ♬♬♬   " + member.getMemberId() + "님 신카에 접속한 것을 환영합니다.  ♬♬♬   ");
+						memInfo = member;
+					
 
-			if (memberID.equals("ge")) {
-				if (member.getMemberPw().equals(memberPw)) {
-					System.out.println("로그인 되었습니다.");
-					System.out.println("🚍🚘🚗관리자로 접속하였습니다.🚗🚘🚍");
-					memInfo = member;
-				} else {
-					System.out.println("비밀번호가 틀립니다.");
+					} else {
+						System.out.println("비밀번호가 틀립니다.");
+
+					}
+
 				}
-			} else if (member.getMemberPw().equals(memberPw)) {
-				System.out.println("로그인 되었습니다.");
-				System.out.println("   🚍🚘🚗   " + member.getMemberId() + "님 신카에 접속한 것을 환영합니다.   🚗🚘🚍   ");
-				memInfo = member;
-
 			} else {
-				System.out.println("비밀번호가 틀립니다.");
+				System.out.println("해당 아이디는 존재하지 않습니다.");
+
 			}
-
-		} else {
-			System.out.println("해당 아이디는 존재하지 않습니다.");
-
 		}
-
-	}
+	
 
 	// 1. 전체 회원 정보 조회
 	public void getMemberList() {
@@ -112,8 +119,22 @@ public class NewCarService {
 	// 5. 회원 등록
 	public void insertNewMember() {
 		System.out.println("-----------회원 등록-------------");
-		System.out.println("회원 아이디>");
-		String ncId = sc.nextLine();
+		boolean run = true;
+
+		String ID = "";
+		while (run) {
+
+			System.out.println("회원 아이디>");
+			String ncId = sc.nextLine();
+			NewCar nc = null;
+			nc = NewCarDAO.getInstance().getMember(ncId);
+			if (nc != null) {
+				System.out.println("중복된 아이디입니다. 다시 기입해주십시요");
+			} else {
+				ID = ncId;
+				run = false;
+			}
+		}
 		System.out.println("패스워드>");
 		String ncPw = sc.nextLine();
 		System.out.println("이름>");
@@ -122,7 +143,7 @@ public class NewCarService {
 		String ncNumber = sc.nextLine();
 
 		NewCar nc = new NewCar();
-		nc.setMemberId(ncId);
+		nc.setMemberId(ID);
 		nc.setMemberPw(ncPw);
 		nc.setMemberName(ncName);
 		nc.setMemberNumber(ncNumber);
@@ -164,18 +185,22 @@ public class NewCarService {
 		System.out.println("-----------회원 삭제--------------");
 		System.out.println("삭제 회원 ID>");
 		String ncId = sc.nextLine();
-
+		System.out.println("정말로 삭제하시겠습니까?(y/n)>");
+		String delete = sc.nextLine();
 		NewCar nc = new NewCar();
 		nc.setMemberId(ncId);
 
-		int result = NewCarDAO.getInstance().deleteMember(nc);
+		if (delete.equals("y")) {
+			int result = NewCarDAO.getInstance().deleteMember(nc);
 
-		if (result > 0) {
-			System.out.println("회원 삭제 완료");
+			if (result > 0) {
+				System.out.println("회원 탈퇴 완료");
+			} else {
+				System.out.println("회원 탈퇴 실패");
+			}
 		} else {
-			System.out.println("회원 삭제 실패");
+			System.out.println("탈퇴 취소");
 		}
-
 	}
 
 	// 8. 차량 등록
@@ -236,9 +261,84 @@ public class NewCarService {
 		insertNewCar();
 		insertNewCondition();
 	}
-	
-	// 9. 차량 교체
-	
+
+	// 9. 차량 수리
+	public void FixNewCar() {
+		FixOil();
+		FixTire();
+		FixEnOil();
+	}
+
+	// 9-1. 차량 오일 교체
+	public void FixOil() {
+		System.out.println("-------------오일 교체---------------");
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+		NewCar nc = new NewCar();
+
+		nc.setCarNumber(ncNumber);
+
+		int result = NewCarDAO.getInstance().FixOil(nc);
+
+		if (result > 0) {
+			System.out.println("오일 교체 완료");
+		} else {
+			System.out.println("오일 교체 실패");
+		}
+	}
+
+	// 9-2 차량 엔진오일 교체
+	public void FixEnOil() {
+		System.out.println("-------------엔진오일 교체---------------");
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+		NewCar nc = new NewCar();
+
+		nc.setCarNumber(ncNumber);
+
+		int result = NewCarDAO.getInstance().FixEnOil(nc);
+
+		if (result > 0) {
+			System.out.println("엔진오일 교체 완료");
+		} else {
+			System.out.println("엔진오일 교체 실패");
+		}
+	}
+
+	// 9-3 차량 타이어 교체
+	public void FixTire() {
+		System.out.println("-------------타이어 교체---------------");
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+		NewCar nc = new NewCar();
+
+		nc.setCarNumber(ncNumber);
+
+		int result = NewCarDAO.getInstance().FixTire(nc);
+
+		if (result > 0) {
+			System.out.println("타이어 교체 완료");
+		} else {
+			System.out.println("타이어 교체 실패");
+		}
+	}
+
+	// 9-4 렌트 사용후 컨디션 변화
+	public void FixCar() {
+		System.out.println("차량 변호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
+
+		NewCar nc = new NewCar();
+
+		nc.setCarNumber(ncNumber);
+
+		int result = NewCarDAO.getInstance().FixCar(ncNumber);
+
+	}
+
 	// 10. 차량 수정
 	public void modifyCar() {
 		System.out.println("-------------차 이름 변경---------------");
@@ -326,7 +426,8 @@ public class NewCarService {
 
 	public void getIncome() {
 		int result = NewCarDAO.getInstance().Income2();
-		System.out.println(result);
+		System.out.println("=======매출 총금액=======");
+		System.out.println("\n"+result + "원");
 	}
 	// 유저-----------------------------------------------------------------
 
@@ -422,27 +523,45 @@ public class NewCarService {
 
 	// 3. 회원 탈퇴
 	public void deleteMyMember() {
-		System.out.println("-----------회원 삭제--------------");
-
-		NewCar nc = new NewCar();
-		nc.setMemberId(memInfo.getMemberId());
-
-		int result = NewCarDAO.getInstance().deleteMember(nc);
-
-		if (result > 0) {
-			System.out.println("회원 삭제 완료");
-		} else {
-			System.out.println("회원 삭제 실패");
+		System.out.println("-----------회원 탈퇴--------------");
+		
+		System.out.println("정말로 삭제하시겠습니까?(y/n)>");
+		String delete = sc.nextLine();
+		if (delete.equals("y")) {
+			NewCar nc = new NewCar();
+			nc.setMemberId(memInfo.getMemberId());
+			int result = NewCarDAO.getInstance().deleteMember(nc);
+			if (result > 0) {
+				System.out.println("회원 삭제 완료");
+			} else {
+				System.out.println("회원 삭제 실패");
+			}
+		} else { 
+			System.out.println("회원 탈퇴 취소");
 		}
-
 	}
 
-	// 4. 렌트
+	// 4. 정보
 
+	public void RentInfo() {
+		List<NewCar> list = NewCarDAO.getInstance().RentInfo();
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println("차량 번호 : " + list.get(i).getCarNumber());
+			System.out.println("차량 이름 : " + list.get(i).getCarName());
+			System.out.println("차량 종류 : " + list.get(i).getCarKind());
+			System.out.println("기본 가격 : " + list.get(i).getPricePrice());
+			System.out.println("렌트 여부 : " + list.get(i).getRentReserved());
+			System.out.println("보험료 : " + list.get(i).getInPrice());
+			System.out.println("기름값은 거리*100입니다.");
+			System.out.println("=============================================");
+
+		}
+	}
+	
+	
+	// 5. 렌트
 	public void Rent() {
 		System.out.println("-------------렌트---------------");
-//		System.out.println("수정할 회원 ID");
-//		String ncId = sc.nextLine();
 
 		System.out.println("렌트 번호>");
 		int ncRentId = Integer.parseInt(sc.nextLine());
@@ -452,10 +571,7 @@ public class NewCarService {
 		String ncDate = sc.nextLine();
 		System.out.println("거리>");
 		int ncDistance = Integer.parseInt(sc.nextLine());
-		System.out.println("예약>");
-		String ncReserved = sc.nextLine();
-//		System.out.println("예약자명(ex)아이디 기입)>");
-//		String ncMemberId = sc.nextLine();
+//		
 		System.out.println("보험(y/n)>");
 		String ncIn = sc.nextLine();
 
@@ -465,10 +581,14 @@ public class NewCarService {
 		nc.setCarNumber(ncNumber);
 		nc.setRentDate(ncDate);
 		nc.setRentDistance(ncDistance);
-		nc.setRentReserved(ncReserved);
+
 		nc.setMemberId(memInfo.getMemberId());
 
+		NewCar ns = new NewCar();
+		ns.setCarNumber(ncNumber);
+
 		int result = NewCarDAO.getInstance().Rent(nc);
+		int result3 = NewCarDAO.getInstance().RentReserved(ns);
 
 		if (ncIn.equals("y")) {
 
@@ -484,19 +604,27 @@ public class NewCarService {
 			System.out.println("렌트 실패");
 		}
 	}
+	
+	//5-1. 렌트 예약 초기화
+	// 5. 렌트 예약 변경
+	public void RentReserved() {
+		System.out.println("차량 번호>");
+		int ncNumber = Integer.parseInt(sc.nextLine());
 
-	// 5. 렌트 취소
+		NewCar nc = new NewCar();
+		nc.setCarNumber(ncNumber);
+
+		int result = NewCarDAO.getInstance().RentReserved(nc);
+	}
+	
+	// 6. 렌트 취소
 
 	public void CancelRent() {
 		System.out.println("-------------렌트취소---------------");
-//		System.out.println("수정할 회원 ID");
-//		String ncId = sc.nextLine();
 
 		System.out.println("차량 번호>");
 		int ncNumber = Integer.parseInt(sc.nextLine());
 
-//		System.out.println("예약자명(ex)아이디 기입)>");
-//		String ncMemberId = sc.nextLine();
 
 		NewCar nc = new NewCar();
 
@@ -513,7 +641,7 @@ public class NewCarService {
 		}
 	}
 
-	// 6. 렌트 반납 및 결제
+	// 7. 렌트 반납 및 결제
 	public void RentReturn() {
 		System.out.println("-------------렌트반납---------------");
 
@@ -525,7 +653,7 @@ public class NewCarService {
 		NewCar ns = NewCarDAO.getInstance().getPrice(memInfo.getMemberId());
 		NewCar nd = NewCarDAO.getInstance().getInsurance(ncNumber);
 		int price = 0;
-		if (nd==null) {
+		if (nd == null) {
 			price = (ns.getPricePrice() + ns.getPriceOil());
 			System.out.println("렌트 번호 : " + ns.getRentId());
 			System.out.println("차량 번호 : " + ns.getCarNumber());
@@ -536,8 +664,8 @@ public class NewCarService {
 			System.out.println("기름값 : " + ns.getPriceOil());
 
 			System.out.println("\n총 금액 " + price + "\n");
-		} else  {
-			price =(ns.getPricePrice() + ns.getPriceOil() + nd.getInPrice());
+		} else {
+			price = (ns.getPricePrice() + ns.getPriceOil() + nd.getInPrice());
 			System.out.println("렌트 번호 : " + ns.getRentId());
 			System.out.println("차량 번호 : " + ns.getCarNumber());
 			System.out.println("차량 이름 : " + ns.getCarName());
@@ -582,9 +710,34 @@ public class NewCarService {
 				System.out.println("\n반납 완료");
 				money += price;
 				int re = NewCarDAO.getInstance().Income(price);
-				
+
+				int re2 = NewCarDAO.getInstance().FixCar(ncNumber);
+
+				NewCar re3 = NewCarDAO.getInstance().getCar(re2);
+				if (re3.getCarOil() <= 5) {
+					System.out.println("\n기름 충전 필요");
+					int re4 = NewCarDAO.getInstance().FixOil(re3);
+					System.out.println("\n자동 기름 충전 완료");
+				} else {
+				}
+
+				if (re3.getCarEnoil() <= 5) {
+					System.out.println("\n엔진오일 교체 필요");
+					int re5 = NewCarDAO.getInstance().FixEnOil(re3);
+					System.out.println("\n자동 엔진오일 교체 완료");
+				} else {
+				}
+
+				if (re3.getCarTire() <= 5) {
+					System.out.println("\n타이어 교체 필요");
+					int re5 = NewCarDAO.getInstance().FixTire(re3);
+					System.out.println("\n자동 타이어 교체 완료");
+				} else {
+				}
+
 				int result2 = NewCarDAO.getInstance().CancelPrice(ns);
 				int result3 = NewCarDAO.getInstance().CancelInsurance(ns);
+
 				run = false;
 			} else {
 				System.out.println("\n반납 실패");
@@ -592,7 +745,7 @@ public class NewCarService {
 		}
 	}
 
-	// 7. 가격
+	// 8. 가격
 
 	public void getPrice() {
 
@@ -610,7 +763,7 @@ public class NewCarService {
 			System.out.println("총 이용한 거리 : " + nc.getRentDistance());
 			System.out.println("기본 가격 : " + nc.getPricePrice());
 			System.out.println("기름값 : " + nc.getPriceOil());
-			
+
 			if (is == null) {
 				System.out.println("보험 가입하지 않았습니다.");
 				System.out.println("\n총 금액 " + (nc.getPricePrice() + nc.getPriceOil()));
@@ -638,7 +791,7 @@ public class NewCarService {
 
 	}
 
-	// 7-1 보험 조회
+	// 8-1 보험 조회
 
 	public void getInsurance() {
 
@@ -651,7 +804,7 @@ public class NewCarService {
 		}
 	}
 
-	// 8. 보험
+	// 9. 보험
 	public void insertInsurance() {
 		System.out.println("-----------보험 가입-------------");
 		System.out.println("보험 하실여부(y/n>");
@@ -675,7 +828,7 @@ public class NewCarService {
 		}
 	}
 
-	// 8-1 보험 취소
+	// 9-1 보험 취소
 	public void CancelInsurance() {
 		System.out.println("-------------보험 취소---------------");
 //		System.out.println("수정할 회원 ID");
